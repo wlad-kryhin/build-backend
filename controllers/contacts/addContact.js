@@ -3,6 +3,9 @@ const ContactSchema = require("../../models/model");
 const addContact = async (req, res, next) => {
   try {
     const body = req.body;
+    if (!("favorite" in body)) {
+      body.favotire = false;
+    }
     const contact = await ContactSchema.create(body);
     res.json({
       status: "success",
