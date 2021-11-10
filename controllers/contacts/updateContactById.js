@@ -9,7 +9,9 @@ const updateContactById = async (req, res, next) => {
       return NotFound(`Missing fields`);
     }
     const { contactId } = req.params;
-    const upContact = await ContactSchema.findByIdAndUpdate(contactId, body);
+    const upContact = await ContactSchema.findByIdAndUpdate(contactId, body, {
+      new: true,
+    });
     if (!upContact) {
       return NotFound(`Contact with id=${contactId} not found`);
     }
