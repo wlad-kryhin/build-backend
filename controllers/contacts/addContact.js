@@ -1,11 +1,13 @@
-const operations = require("../../model/contacts");
-const schemaAdd = require("../../validation/JoiSchema");
+const ContactSchema = require("../../models/model");
 
 const addContact = async (req, res, next) => {
   try {
     const body = req.body;
-    const contact = await operations.add(body);
-    res.status(201).json({
+    if (!("favorite" in body)) {
+      body.favotire = false;
+    }
+    const contact = await ContactSchema.create(body);
+    res.json({
       status: "success",
       code: 201,
       data: {

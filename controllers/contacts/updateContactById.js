@@ -1,4 +1,4 @@
-const operations = require("../../model/contacts");
+const ContactSchema = require("../../models/model");
 const { NotFound } = require("http-errors");
 
 const updateContactById = async (req, res, next) => {
@@ -9,7 +9,9 @@ const updateContactById = async (req, res, next) => {
       return NotFound(`Missing fields`);
     }
     const { contactId } = req.params;
-    const upContact = await operations.updateContactById(contactId, body);
+    const upContact = await ContactSchema.findByIdAndUpdate(contactId, body, {
+      new: true,
+    });
     if (!upContact) {
       return NotFound(`Contact with id=${contactId} not found`);
     }
