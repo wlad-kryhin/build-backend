@@ -4,23 +4,31 @@ const { contacts: ctr } = require("../../controllers");
 const ctrlWrapper = require("../../validation/ctrlWrapper");
 const { schemaAdd, schemaUpdate } = require("../../validation/JoiSchema");
 const validation = require("../../validation/validation");
+const authenticate = require("../../middlewares/authenticate");
 
-router.get("/", ctrlWrapper(ctr.getAllContacts));
+router.get("/", authenticate, ctrlWrapper(ctr.getAllContacts));
 
-router.get("/:contactId", ctrlWrapper(ctr.getContactById));
+router.get("/:contactId", authenticate, ctrlWrapper(ctr.getContactById));
 
-router.post("/", validation(schemaAdd), ctrlWrapper(ctr.addContact));
+router.post(
+  "/",
+  authenticate,
+  validation(schemaAdd),
+  ctrlWrapper(ctr.addContact),
+);
 
-router.delete("/:contactId", ctrlWrapper(ctr.deleteContact));
+router.delete("/:contactId", authenticate, ctrlWrapper(ctr.deleteContact));
 
 router.put(
   "/:contactId",
+  authenticate,
   validation(schemaUpdate),
   ctrlWrapper(ctr.updateContactById),
 );
 
 router.patch(
   "/:contactId/favorite",
+  authenticate,
   validation(schemaUpdate),
   ctrlWrapper(ctr.updateFavorite),
 );
