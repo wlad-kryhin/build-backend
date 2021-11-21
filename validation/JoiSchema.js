@@ -13,4 +13,9 @@ const schemaUpdate = Joi.object({
   favorite: Joi.boolean(),
 });
 
-module.exports = { schemaAdd, schemaUpdate };
+const schemaAuth = Joi.object({
+  email: Joi.string().required(),
+  password: Joi.string().min(6).required(),
+});
+
+module.exports = { schemaAdd, schemaUpdate, schemaAuth };

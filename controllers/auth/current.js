@@ -1,5 +1,5 @@
-const { User } = require("../../models/user");
-const { NotFound, Unauthorized } = require("http-errors");
+const User = require("../../models/user");
+const { Unauthorized } = require("http-errors");
 
 const current = async (req, res, next) => {
   try {
@@ -8,6 +8,13 @@ const current = async (req, res, next) => {
     if (!user) {
       throw new Unauthorized();
     }
-  } catch (error) {}
+    res.json({
+      status: "success",
+      code: 200,
+      result: user,
+    });
+  } catch (error) {
+    next(error.message);
+  }
 };
 module.exports = current;
