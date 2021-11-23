@@ -2,11 +2,11 @@ const ContactSchema = require("../../models/model");
 
 const addContact = async (req, res, next) => {
   try {
-    const body = req.body;
-    if (!("favorite" in body)) {
-      body.favotire = false;
+    const newContact = { ...req.body, owner: req.user._id };
+    if (!("favorite" in newContact)) {
+      newContact.favotire = false;
     }
-    const contact = await ContactSchema.create(body);
+    const contact = await ContactSchema.create(newContact);
     res.json({
       status: "success",
       code: 201,
