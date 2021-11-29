@@ -11,6 +11,11 @@ router.post("/signup", validation(schemaAuth), ctrlWrapper(ctrl.register));
 router.post("/login", validation(schemaAuth), ctrlWrapper(ctrl.login));
 router.post("/logout", authenticate, ctrlWrapper(ctrl.logout));
 router.get("/current", authenticate, ctrlWrapper(ctrl.current));
-router.get("/avatars", upload.single("avatarURL"), ctrlWrapper(ctrl.updateIMG));
+router.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatarURL"),
+  ctrlWrapper(ctrl.updateIMG),
+);
 
 module.exports = router;
