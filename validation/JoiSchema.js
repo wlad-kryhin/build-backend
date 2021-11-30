@@ -16,7 +16,6 @@ const schemaUpdate = Joi.object({
 const schemaAuth = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().min(6).required(),
-  avatarURL: Joi.string(),
 });
 
 module.exports = { schemaAdd, schemaUpdate, schemaAuth };
